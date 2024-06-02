@@ -20,7 +20,7 @@ npm install
 # features:
 
 In addition to showing the image, it also displays:
- width in pixels;
- height in pixels;
- file name;
- file size.
+ width in pixels;  
+ height in pixels;  
+ file name;  
+ file size.  
