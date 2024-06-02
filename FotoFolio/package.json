@@ -1,0 +1,20 @@
+{
+  "name": "diretory-electron-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder",
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^29.1.1"
+  },
+  "dependencies": {
+    "sharp": "^0.33.3"
+  }
+}
