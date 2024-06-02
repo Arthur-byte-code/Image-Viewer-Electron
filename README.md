@@ -15,3 +15,11 @@ Electron.js is an open-source framework that enables the development of cross-pl
 # DO NOT FORGET TO INSTALL ALL NODE MODULES (DEPENDENCIES)
 ```bash
 npm install
+
+#features:
+
+In addition to showing the image, it also displays:
+ width in pixels;
+ height in pixels;
+ file name;
+ file size.
