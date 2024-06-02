@@ -15,4 +15,3 @@ Electron.js is an open-source framework that enables the development of cross-pl
 # DO NOT FORGET TO INSTALL ALL NODE MODULES (DEPENDENCIES)
 ```bash
 npm install
-npm install
