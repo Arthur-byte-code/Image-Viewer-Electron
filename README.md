@@ -17,7 +17,7 @@ Electron.js is an open-source framework that enables the development of cross-pl
 npm install
 ```
 
-#features:
+# features:
 
 In addition to showing the image, it also displays:
  width in pixels;
