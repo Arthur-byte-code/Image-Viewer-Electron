@@ -1,6 +1,6 @@
 # Image-Viewer-Electron
 
-By choosing a folder full of images, this application can browse through and display them. **(I am still working on this project)**
+By choosing a folder full of images (select the folder by clicking on the folder icon), this application can browse through and display them. **(I am still working on this project)**
 
 **Preview:**
 ![fotofolio](https://github.com/Arthur-byte-code/Image-Viewer-Electron/assets/152222113/61bd3d76-42f4-4929-9524-2326f718ce14)
