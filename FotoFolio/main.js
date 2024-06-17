@@ -3,6 +3,9 @@ const path = require('path');
 const ipc = ipcMain;
 const { electron } = require('process');
 
+// Variable to track if the explorer is currently open
+let explorerOpened = false;
+
 // Function to create the main window
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -21,11 +24,17 @@ function createWindow() {
 
   // Open the file explorer when the app is ready
   ipcMain.on('openExplorer', () => {
+    if (explorerOpened) {
+      return; // If explorer is currently open, do nothing
+    }
+
+    explorerOpened = true; // Set the explorer as open
     console.log("Clicked successfully");
 
     dialog.showOpenDialog({
       properties: ['openFile', 'openDirectory'],
     }).then(result => {
+      explorerOpened = false; // Reset the explorerOpened flag
       // Check if the user selected any file or folder
       if (!result.canceled) {
         // Do whatever you need with the selected file or folder path
@@ -50,6 +59,7 @@ function createWindow() {
         console.log('No file or folder selected');
       }
     }).catch(err => {
+      explorerOpened = false; // Reset the explorerOpened flag in case of an error
       console.log('Error opening the dialog:', err);
     });
   });
