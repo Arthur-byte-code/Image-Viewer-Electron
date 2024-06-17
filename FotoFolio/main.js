@@ -20,7 +20,7 @@ function createWindow() {
 
   // Load the HTML file of the main window
   mainWindow.loadFile('index.html');
-  mainWindow.removeMenu();
+  //mainWindow.removeMenu();
 
   // Open the file explorer when the app is ready
   ipcMain.on('openExplorer', () => {

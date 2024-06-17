@@ -15,78 +15,90 @@ ipcRenderer.on('load_folder', async (event, folderPath) => {
     const acceptedExtensions = ['.jpg', '.png', '.svg'];
     const images = files.filter(file => acceptedExtensions.includes(path.extname(file)));
 
-    console.log('Number of files in the folder:', files.length);
-    console.log('Files in the folder:', files);
+    console.log('Number of files in the folder:', images.length);
+    console.log('Files in the folder:', images);
 
-    let i = 0;
-    document.getElementById('image-display').src = directoryPath + files[i];
-    dimensions();
+    let currentIndex = 0;
 
-    const nextImage = document.getElementById('iconRight');
-    nextImage.addEventListener('click', () => {
-      i++;
-      dimensions();
-      if (i >= 0 && i < files.length) {
-        document.getElementById('image-display').src = directoryPath + '\\' + files[i];
-      } else if (i < 0) {
-        i = 0;
-        ipcRenderer.send('outOfRange');
-      } else {
-        i = files.length - 1;
-        ipcRenderer.send('outOfRange');
-      }
-    });
+    // Display initial image
+    displayImage(images[currentIndex]);
 
-    const previousImage = document.getElementById('iconLeft');
-    previousImage.addEventListener('click', () => {
-      i--;
-      dimensions();
-      if (i >= 0 && i < files.length) {
-        document.getElementById('image-display').src = directoryPath + '\\' + files[i];
-      } else {
-        ipcRenderer.send('outOfRange');
-      }
-    });
+    // Function to display image based on index
+    async function displayImage(filename) {
+      const filePath = path.join(directoryPath, filename);
 
-    async function dimensions() {
-      const filePath = directoryPath + files[i];
+      // Read metadata of the image using Sharp
       const metadata = await sharp(filePath).metadata();
       const fileSize = (await fs.stat(filePath)).size;
       const fileSizeInKB = (fileSize / 1024).toFixed(2); // Convert bytes to kilobytes
-  
+
       const width = metadata.width;
       const height = metadata.height;
-      const name = files[i];
-  
+      const name = filename;
+
       ipcRenderer.send('imageInfo', width, height, name, fileSizeInKB);
+
       document.getElementById("nameImg").innerHTML = `Name: ${name}`;
       document.getElementById("heightPx").innerHTML = `Height: ${height} px`;
       document.getElementById("widthPx").innerHTML = `Width: ${width} px`;
       document.getElementById("kbs").innerHTML = `Size: ${fileSizeInKB} KB`;
-  
-      let ImgPlace = document.getElementById('image-display');
-  
-      const desiredWidth = 1332;
-      const desiredHeight = 682.69;
-  
-      // Calculate the original image ratio
-      const originalRatio = width / height;
-  
-      // Calculate the new dimensions respecting the limit
-      let newWidth, newHeight;
-      if (originalRatio > desiredWidth / desiredHeight) {
-          newWidth = desiredWidth;
-          newHeight = desiredWidth / originalRatio;
-      } else {
-          newHeight = desiredHeight;
-          newWidth = desiredHeight * originalRatio;
+
+      // Set desired dimensions
+      const desiredWidth = 800; // Example width
+      const desiredHeight = 600; // Example height
+
+      // Calculate new dimensions while maintaining aspect ratio
+      const resizedImageBuffer = await sharp(filePath)
+        .resize({
+          width: desiredWidth,
+          height: desiredHeight,
+          fit: sharp.fit.inside, // Maintain aspect ratio and fit inside the dimensions
+        })
+        .toBuffer();
+
+      // Convert the resized image buffer to a data URL for display
+      const resizedImageData = Buffer.from(resizedImageBuffer).toString('base64');
+      document.getElementById('image-display').src = `data:image/png;base64,${resizedImageData}`;
+    }
+
+    // Function to navigate to the next image
+    function nextImage() {
+      currentIndex++;
+      if (currentIndex >= images.length) {
+        currentIndex = 0;
       }
-  
-      // Set the new dimensions of the image
-      ImgPlace.style.width = newWidth + 'px';
-      ImgPlace.style.height = newHeight + 'px';
-  }
-  
+      displayImage(images[currentIndex]);
+    }
+
+    // Function to navigate to the previous image
+    function previousImage() {
+      currentIndex--;
+      if (currentIndex < 0) {
+        currentIndex = images.length - 1;
+      }
+      displayImage(images[currentIndex]);
+    }
+
+    // Event listener for next button click
+    document.getElementById('iconRight').addEventListener('click', nextImage);
+
+    // Event listener for previous button click
+    document.getElementById('iconLeft').addEventListener('click', previousImage);
+
+    // Event listener for keyboard arrow keys
+    document.addEventListener('keydown', event => {
+      switch (event.key) {
+        case 'ArrowLeft':
+          previousImage();
+          break;
+        case 'ArrowRight':
+          nextImage();
+          break;
+        default:
+          break;
+      }
+    });
+
   } catch (error) {
     console.error('Error reading the directory:', error);
   }

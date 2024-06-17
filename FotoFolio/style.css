@@ -1,20 +1,16 @@
 body {
   width: 100%;
-  height:100px;
+  height:100%;
   display: flex; /* Use flexbox */
   justify-content: space-between  ;
   margin: 0;
-  
   flex-direction: column;
-
-    
-    height: 100vh;
-    background-image: url(1218601-parede-de-tijolo-preto-gratis-vetor.jpg);
-    
-    background-size: cover;
-    background-position: center;
-    
-    color: #00000079;
+  height: 100vh;
+  width: 100vw;
+  background-image: url(1218601-parede-de-tijolo-preto-gratis-vetor.jpg);
+  background-size: cover;
+  background-position: center;
+  color: #00000079;
     
     
 }
@@ -30,7 +26,8 @@ body {
 
 }
 #image-display{
-    cursor: url(Symbol.png); /* Use the specified image as the cursor when hovering over the element */
+  max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho do contêiner */
+  height: auto; /* Mantém a proporção da imagem */
 }
 
 .arrows {
