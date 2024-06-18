@@ -45,12 +45,7 @@ function createWindow() {
         });
         mainWindow.reload();
 
-        ipcMain.on('outOfRange', () => {
-          mainWindow.setEnabled(false); // Disable the main window
-          dialog.showErrorBox('Error', 'No images in this direction ☹');
-          mainWindow.focus();
-          mainWindow.setEnabled(true); // Re-enable the main window
-        });
+        
 
         ipcMain.on('imageInfo', (event, width, height, name, photoSize) => {
           console.log(`Width -> (${width}), Height -> (${height}), Image Name -> (${name}), Size -> (${photoSize})`);
