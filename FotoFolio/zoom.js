@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     zoomLens.style.left = `${lensX +100}px`;
     zoomLens.style.top = `${lensY +100}px`;
 
+
     // Calcular a posição do fundo da lente
     const bgX = (x / width) * 100;
     const bgY = (y / height) * 100;
