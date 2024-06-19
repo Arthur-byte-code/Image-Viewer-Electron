@@ -137,4 +137,25 @@ body {
     width: 125px;
     color: #f1f1f1;
   }
+  .image-container {
+    position: relative;
+    display: inline-block;
+  }
   
+  .image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  .zoom-lens {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    width: 100px; /* Ajuste conforme necessário */
+    height: 100px; /* Ajuste conforme necessário */
+    background-repeat: no-repeat;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    border-radius: 50%; /* Torna a lupa uma bolinha */
+    display: none; /* Inicialmente escondida */
+  }
