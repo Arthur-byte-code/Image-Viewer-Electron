@@ -12,11 +12,10 @@ ipcRenderer.on('load_folder', async (event, folderPath) => {
 
   try {
     const files = await fs.readdir(directoryPath);
-    const acceptedExtensions = ['.jpg', '.png', '.svg'];
+    const acceptedExtensions = ['.jpg', '.png', '.svg', '.webp', '.gif'];
     const images = files.filter(file => acceptedExtensions.includes(path.extname(file)));
 
-    console.log('Number of files in the folder:', images.length);
-    console.log('Files in the folder:', images);
+
 
     let currentIndex = 0;
 

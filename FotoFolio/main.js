@@ -29,7 +29,7 @@ function createWindow() {
     }
 
     explorerOpened = true; // Set the explorer as open
-    console.log("Clicked successfully");
+    
 
     dialog.showOpenDialog({
       properties: ['openFile', 'openDirectory'],
@@ -41,14 +41,14 @@ function createWindow() {
         // Send the path
         mainWindow.webContents.on('did-finish-load', () => {
           mainWindow.webContents.send('load_folder', result.filePaths);
-          console.log(`The path sent to ipcRenderer was ---> ${result.filePaths}`);
+          
         });
         mainWindow.reload();
 
         
 
         ipcMain.on('imageInfo', (event, width, height, name, photoSize) => {
-          console.log(`Width -> (${width}), Height -> (${height}), Image Name -> (${name}), Size -> (${photoSize})`);
+          
         });
       } else {
         console.log('No file or folder selected');
